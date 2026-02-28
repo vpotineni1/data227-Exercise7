@@ -107,3 +107,36 @@ def chart_dashboard(df: pd.DataFrame) -> alt.Chart:
     )
 
     return alt.vconcat(line, hist).resolve_scale(color="independent")
+
+
+
+def static_viz(df:pd.DataFrame) -> alt.Chart:
+    monthly = df.groupby("month_name", as_index = False)['precipitation'].sum()
+    month_order = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+
+    static_chart = alt.Chart(monthly, title = alt.TitleParams(text = "Total Precipitation by Month Across All Years", fontSize = 20)
+                             ).mark_bar().encode(
+    x = alt.X('month_name:N', title = 'Month', sort = month_order, axis = alt.Axis(labelFontSize = 12, titleFontSize = 15)),
+    y = alt.Y('precipitation:Q', title = 'Precipitation',  axis = alt.Axis(labelFontSize =12, titleFontSize = 15)),
+    tooltip = ['month_name','precipitation']).properties(height = 700, width = 900)
+
+    return static_chart
+
+
+def interactive_viz(df:pd.DataFrame) -> alt.Chart:
+    brush = alt.selection_interval() 
+
+    dot_chart = alt.Chart(df, title = alt.TitleParams(text = "Scatterplot of Precipitation vs. Wind", fontSize = 20)).mark_circle().encode(
+    x = alt.X('wind:Q', title = 'Wind', axis = alt.Axis(labelFontSize = 12, titleFontSize = 15)),
+    y = alt.Y('precipitation:Q', title = 'Precipitation',  axis = alt.Axis(labelFontSize =12, titleFontSize = 15)),
+    color = alt.Color('weather:N', title = 'Weather Type', legend = alt.Legend(labelFontSize = 12, titleFontSize = 15)),
+    tooltip = ['wind','precipitation']).add_params(brush).properties(height = 700, width = 900)
+
+    bar_chart = alt.Chart(df, title = alt.TitleParams(text = "Aggregated Number of Days by Weather Type", fontSize = 20)).mark_bar().transform_filter(brush).encode(
+    x = alt.X("weather:N", title = 'Weather Type',  axis = alt.Axis(labelFontSize = 12, titleFontSize = 15)),
+    y = alt.Y("count()", title = 'Number of Days', axis = alt.Axis(labelFontSize =12, titleFontSize = 15)),
+    color = alt.Color('weather:N')).properties(height = 700, width = 900)
+
+    return dot_chart & bar_chart
+
+
