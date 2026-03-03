@@ -41,7 +41,7 @@ st.altair_chart(chart_explain_precip_vs_temp(df), use_container_width=True)
 st.caption("Takeaway: The relationship is noisy — precipitation alone does not explain extreme heat, motivating more fine-grained exploration.")
 
 
-st.header("4) Total Precipitation by Month Across All Years")
+st.header("5) Total Precipitation by Month Across All Years")
 st.write("We want to visualize which months experience the most precipitation in an easy manner.")
 st.altair_chart(static_viz(df), use_container_width=True)
 st.caption("Takeaway: The Summer months experience the least amount of precipitation, while the Winter and Spring months experience the most. There is evidence of strong precipitation patterns.")

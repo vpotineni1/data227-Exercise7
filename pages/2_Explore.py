@@ -17,9 +17,11 @@ st.write("- Compare histogram shape across weather types—what changes most: ce
 
 
 st.title("Another Interactive Exploratory View")
-st.write("Use interaction to understand the relationship between wind and precipitation and extend the focus to its relationship with weather-type.")
+st.write("Use interaction to understand the relationship between wind and average temperature (taken as an average of the min. and max. temperature for that day), and extend the focus to its relationship with weather-type.")
 
 st.altair_chart(interactive_viz(df), use_container_width=True)
 
 st.markdown("**Guided prompts:**")
-st.write("- Brush over the extreme regions in the scatterplot — are certain regions of wind-precipitation associated with a weather-type?")
+st.write("- Brush over the extreme regions in the scatterplot — are certain regions of wind-temperature associated with a weather-type?")
+st.caption("Takeaway: Higher wind and lower temperature days are associated with rain and fog weather types.")
+
