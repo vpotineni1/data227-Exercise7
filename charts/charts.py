@@ -111,7 +111,7 @@ def chart_dashboard(df: pd.DataFrame) -> alt.Chart:
 
 
 def static_viz(df:pd.DataFrame) -> alt.Chart:
-    monthly = df.groupby(["month_name",'year'], as_index = False)['precipitation'].sum()
+    monthly = df.groupby(["month_name"], as_index = False)['precipitation'].sum()
     month_order = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
 
     static_chart = alt.Chart(monthly, title = alt.TitleParams(text = "Total Precipitation by Month Across All Years", fontSize = 20)
